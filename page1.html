@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Website</title>
+
+    <style>
+        body {
+            background: linear-gradient(270deg, #ff0000, #0000ff, #00ff00);
+            background-size: 600% 600%;
+            animation: gradientMove 15s ease infinite;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        @keyframes gradientMove {
+            0% {background-position: 0% 25%;}
+            25% {background-position: 25% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid white;
+            padding: 5px 15px;
+            border-radius: 8px;
+        }
+
+        /* CONTAINER */
+        .container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        /* ABOUT */
+        .about {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 5px solid white;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        /* GRID GAME */
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* CARD GAME */
+        .game-card {
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.5);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+            border-color: white;
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .game-title {
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .game-card a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* POPUP */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+
+            animation: overlayFade 1s ease;
+        }
+
+        .popup {
+            position: relative;
+            overflow: hidden;
+
+            background: linear-gradient(
+                270deg,
+                #4169E1,
+                #00BFFF,
+                #5F9EA0,
+                #1E90FF,
+                #4169E1
+            );
+
+            background-size: 600% 600%;
+
+            animation:
+                popupShow 1s ease,
+                popupGradient 8s ease infinite;
+
+            color: white;
+            width: 550px;
+            padding: 30px;
+            border-radius: 50px;
+            text-align: center;
+
+            box-shadow:
+                0 0 20px rgba(255,255,255,0.3),
+                0 0 40px rgba(0,150,255,0.4),
+                0 0 60px rgba(0,100,255,0.3);
+        }
+
+        /* EFEK KILAU */
+        .popup::before {
+            content: "";
+            position: absolute;
+
+            top: -50%;
+            left: -50%;
+
+            width: 200%;
+            height: 200%;
+
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,0.25),
+                transparent
+            );
+
+            transform: rotate(25deg);
+
+            animation: shine 4s linear infinite;
+        }
+
+        .popup h2 {
+            margin-top: 0;
+        }
+
+        .popup button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .popup button:hover {
+            background: #0056b3;
+            transform: scale(1.08);
+        }
+
+        /* ANIMASI MASUK */
+        @keyframes popupShow {
+
+            0%{
+                transform: scale(0.3) translateY(-200px);
+                opacity: 0;
+            }
+
+            60%{
+                transform: scale(1.08) translateY(20px);
+                opacity: 1;
+            }
+
+            80%{
+                transform: scale(0.96);
+            }
+
+            100%{
+                transform: scale(1);
+            }
+        }
+
+        /* BACKGROUND BERGERAK */
+        @keyframes popupGradient {
+
+            0%{
+                background-position: 0% 50%;
+            }
+
+            50%{
+                background-position: 100% 50%;
+            }
+
+            100%{
+                background-position: 0% 50%;
+            }
+        }
+
+        /* OVERLAY FADE */
+        @keyframes overlayFade {
+
+            from{
+                opacity: 0;
+            }
+
+            to{
+                opacity: 1;
+            }
+        }
+
+        /* EFEK KILAU */
+        @keyframes shine {
+
+            0%{
+                transform: translateX(-100%) rotate(25deg);
+            }
+
+            100%{
+                transform: translateX(100%) rotate(25deg);
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- POPUP -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup">
+            <h2>Selamat Datang</h2>
+            <p><b>SELAMAT DATANG DI WEBSITE 4 BROTHER.</b></p>
+            <button onclick="closePopup()"><b>MASUK</b></button>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">🎮 4 BROTHER</div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="container">
+
+        <h1>SELAMAT DATANG DI WEBSITE KAMI</h1>
+
+        <!-- ABOUT -->
+        <div class="about">
+            <p>
+                Website ini menyediakan berbagai pilihan game seru yang bisa kamu jelajahi.
+                Temukan game favoritmu dan mulai bermain sekarang!
+            </p>
+        </div>
+
+        <!-- GAME LIST -->
+        <div class="game-list">
+
+            <div class="game-card">
+                <a href="page2.html">
+                    <img src="GTA V.jpg" alt="GTA V">
+                    <div class="game-title">GTA V</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page3.html">
+                    <img src="PUGB.jpg" alt="PUBG">
+                    <div class="game-title">PUBG</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page4.html">
+                    <img src="DOTA 2.jpg" alt="DOTA 2">
+                    <div class="game-title">DOTA 2</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page5.html">
+                    <img src="CS 2.png" alt="CS 2">
+                    <div class="game-title">CS 2</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page6.html">
+                    <img src="VALORANT.jpg" alt="VALORANT">
+                    <div class="game-title">VALORANT</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page7.html">
+                    <img src="RDR 2.jpg" alt="RDR 2">
+                    <div class="game-title">RDR 2</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page8.html">
+                    <img src="PRAGMATA.jpg" alt="PRAGMATA">
+                    <div class="game-title">PRAGMATA</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page9.html">
+                    <img src="ELDEN RING.jpg" alt="ELDEN RING">
+                    <div class="game-title">ELDEN RING</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page10.html">
+                    <img src="FORZA HORIZON 5.jpg" alt="FORZA HORIZON 5">
+                    <div class="game-title">FORZA HORIZON 5</div>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <a href="page11.html">
+                    <img src="GOD OF WAR RAGNAROK.jpg" alt="GOD OF WAR RAGNAROK">
+                    <div class="game-title">GOD OF WAR RAGNAROK</div>
+                </a>
+            </div>
+
+<div class="game-card">
+                <a href="page12.html">
+                    <img src="WW Z.jpg" alt="GOD OF WAR RAGNAROK">
+                    <div class="game-title">WORLD WAR Z</div>
+                </a>
+            </div>
+
+ <div class="game-card">
+                <a href="page13.html">
+                    <img src="SILENT HILL F.jpg" alt="GOD OF WAR RAGNAROK">
+                    <div class="game-title">SILENT HILL F</div>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
